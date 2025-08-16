@@ -29,6 +29,10 @@
     {
       "url": "https://f076-38-146-55-45.ngrok-free.app",
       "description": "Test2 Tunnel"
+    },
+    {
+      "url": "https://bid2bill.com",
+      "description": "Bid2Bill API - Main"
     }
   ],
   "paths": {
