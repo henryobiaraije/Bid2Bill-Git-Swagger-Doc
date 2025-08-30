@@ -29,10 +29,6 @@
     {
       "url": "https://f076-38-146-55-45.ngrok-free.app",
       "description": "Test2 Tunnel"
-    },
-    {
-      "url": "https://bid2bill.com",
-      "description": "Bid2Bill API - Main"
     }
   ],
   "paths": {
@@ -1488,6 +1484,68 @@
           },
           "403": {
             "$ref": "#/components/responses/ErrorResponse"
+          }
+        },
+        "tags": [
+          "Buyer",
+          "Bid Request"
+        ]
+      }
+    },
+    "/wp-json/bid-2-bill/v1/buyer/bid-request/{bid_request_id}/mark-as-paid/order/{order_id}": {
+      "put": {
+        "summary": "Mark a bid request as paid by the current logged in buyer.",
+        "operationId": "markBidRequestAsPaid",
+        "parameters": [
+          {
+            "name": "bid_request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the bid request to mark as paid"
+          },
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the order created for this bid request"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bid request successfully marked as paid by current logged in buyer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid bid request, invalid order, order not paid, no products in order, not all products in order, no accepted offer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Not allowed (user does not own bid request or order)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -4595,8 +4653,9 @@
           },
           "mycred_points_left": {
             "type": "integer",
-            "description": "DEPRECATED: Will be removed in the next major version",
-            "example": 100
+            "description": "DEPRECATED: Will be removed in the next major version. Use wallet_balance",
+            "example": 100,
+            "deprecated": true
           },
           "wallet_balance": {
             "type": "number",
